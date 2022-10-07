@@ -1,0 +1,140 @@
+[centos@hlohse-hivemq1 ~]$ java -jar lightning-talk-demo.jar 0 5000000 1000
+PRIMITIVE_ARRAY with 5000000 values and 1000 iterations.
+Press enter to start.
+
+Sum -953165500287472320 @ 6 ms mean runtime per iteration.
+
+[centos@hlohse-hivemq1 ~]$ ps -faux | grep lightning
+centos   26877  0.0  0.0 112788  2008 pts/0    S+   12:25   0:00  |           \_ grep --color=auto lightning
+centos   26855 15.4  1.0 4824800 82916 pts/1   Sl+  12:25   0:00              \_ java -jar lightning-talk-demo.jar 0 5000000 1000
+[centos@hlohse-hivemq1 ~]$ sudo perf stat -e L1-dcache-loads,L1-dcache-load-misses,cache-references,cache-misses,branches,branch-misses -p 26855
+
+ Performance counter stats for process id '26855':
+
+        5127312450      L1-dcache-loads                                               (55.47%)
+         627945307      L1-dcache-load-misses     #   12.25% of all L1-dcache hits    (33.88%)
+         426154792      cache-references                                              (38.81%)
+         139676535      cache-misses              #   32.776 % of all cache refs      (55.25%)
+         557637849      branches                                                      (66.42%)
+           2003892      branch-misses             #    0.36% of all branches          (66.27%)
+
+       7.002355212 seconds time elapsed
+
+
+[centos@hlohse-hivemq1 ~]$ java -jar lightning-talk-demo.jar 1 5000000 1000
+BOXED_ARRAY with 5000000 values and 1000 iterations.
+Press enter to start.
+
+Sum -953165500287472320 @ 17 ms mean runtime per iteration.
+
+[centos@hlohse-hivemq1 ~]$ ps -faux | grep lightning
+centos   26918  0.0  0.0 112788  2156 pts/0    S+   12:25   0:00  |           \_ grep --color=auto lightning
+centos   26894  102  2.5 5091072 204360 pts/1  Sl+  12:25   0:02              \_ java -jar lightning-talk-demo.jar 1 5000000 1000
+[centos@hlohse-hivemq1 ~]$ sudo perf stat -e L1-dcache-loads,L1-dcache-load-misses,cache-references,cache-misses,branches,branch-misses -p 26894
+
+ Performance counter stats for process id '26894':
+
+       11453384395      L1-dcache-loads                                               (63.22%)
+        2235926578      L1-dcache-load-misses     #   19.52% of all L1-dcache hits    (39.45%)
+        1927024255      cache-references                                              (33.39%)
+         719696364      cache-misses              #   37.348 % of all cache refs      (49.91%)
+         741905539      branches                                                      (66.42%)
+           2571897      branch-misses             #    0.35% of all branches          (66.32%)
+
+      19.017143004 seconds time elapsed
+
+
+
+[centos@hlohse-hivemq1 ~]$ java -jar lightning-talk-demo.jar 2 5000000 1000
+ARRAY_LIST with 5000000 values and 1000 iterations.
+Press enter to start.
+
+Sum -953165500287472320 @ 25 ms mean runtime per iteration.
+
+[centos@hlohse-hivemq1 ~]$ ps -faux | grep lightning
+centos   26974  0.0  0.0 112788  2160 pts/0    S+   12:26   0:00  |           \_ grep --color=auto lightning
+centos   26950  102  2.5 5157640 207912 pts/1  Sl+  12:26   0:02              \_ java -jar lightning-talk-demo.jar 2 5000000 1000
+[centos@hlohse-hivemq1 ~]$ sudo perf stat -e L1-dcache-loads,L1-dcache-load-misses,cache-references,cache-misses,branches,branch-misses -p 26950
+
+ Performance counter stats for process id '26950':
+
+       20394964164      L1-dcache-loads                                               (61.90%)
+        2223031359      L1-dcache-load-misses     #   10.90% of all L1-dcache hits    (35.79%)
+        1465409255      cache-references                                              (33.45%)
+         779875626      cache-misses              #   53.219 % of all cache refs      (50.03%)
+        5923279318      branches                                                      (66.61%)
+           2251829      branch-misses             #    0.04% of all branches          (66.46%)
+
+      26.007772946 seconds time elapsed
+
+
+
+[centos@hlohse-hivemq1 ~]$ java -jar lightning-talk-demo.jar 3 5000000 500
+LINKED_LIST_CREATION_ORDER with 5000000 values and 500 iterations.
+Press enter to start.
+
+Sum 8746789286711039648 @ 74 ms mean runtime per iteration.
+
+[centos@hlohse-hivemq1 ~]$ ps -faux | grep lightning
+centos   27040  0.0  0.0 112788  2084 pts/0    S+   12:27   0:00  |           \_ grep --color=auto lightning
+centos   27016  172  4.5 5091068 370224 pts/1  Sl+  12:27   0:05              \_ java -jar lightning-talk-demo.jar 3 5000000 500
+[centos@hlohse-hivemq1 ~]$ sudo perf stat -e L1-dcache-loads,L1-dcache-load-misses,cache-references,cache-misses,branches,branch-misses -p 27016
+
+ Performance counter stats for process id '27016':
+
+       48021983023      L1-dcache-loads                                               (66.55%)
+        2016637502      L1-dcache-load-misses     #    4.20% of all L1-dcache hits    (33.50%)
+         900988765      cache-references                                              (33.41%)
+         409626447      cache-misses              #   45.464 % of all cache refs      (50.00%)
+       22375472367      branches                                                      (66.62%)
+           2631380      branch-misses             #    0.01% of all branches          (66.51%)
+
+      38.009607368 seconds time elapsed
+
+
+
+[centos@hlohse-hivemq1 ~]$ java -jar lightning-talk-demo.jar 4 5000000 200
+LINKED_LIST_RANDOM_ORDER with 5000000 values and 200 iterations.
+Press enter to start.
+
+Sum -190633100057494464 @ 239 ms mean runtime per iteration.
+
+[centos@hlohse-hivemq1 ~]$ ps -faux | grep lightning
+centos   27118  0.0  0.0 112788  2080 pts/0    S+   12:28   0:00  |           \_ grep --color=auto lightning
+centos   27091  222  2.9 5225236 240476 pts/1  Sl+  12:28   0:06              \_ java -jar lightning-talk-demo.jar 4 5000000 200
+[centos@hlohse-hivemq1 ~]$ sudo perf stat -e L1-dcache-loads,L1-dcache-load-misses,cache-references,cache-misses,branches,branch-misses -p 27091
+
+ Performance counter stats for process id '27091':
+
+       19263364839      L1-dcache-loads                                               (66.29%)
+        2379823230      L1-dcache-load-misses     #   12.35% of all L1-dcache hits    (34.00%)
+        1975431244      cache-references                                              (33.35%)
+         865071685      cache-misses              #   43.792 % of all cache refs      (49.97%)
+        6066109949      branches                                                      (66.65%)
+           4155427      branch-misses             #    0.07% of all branches          (66.59%)
+
+      49.035409235 seconds time elapsed
+
+
+
+[centos@hlohse-hivemq1 ~]$ java -jar lightning-talk-demo.jar 5 5000000 100
+TREE_SET with 5000000 values and 100 iterations.
+Press enter to start.
+
+Sum 9128055486826028576 @ 561 ms mean runtime per iteration.
+
+[centos@hlohse-hivemq1 ~]$ ps -faux | grep lightning
+centos   27205  0.0  0.0 112788  2136 pts/0    S+   12:29   0:00  |           \_ grep --color=auto lightning
+centos   27179  269  1.7 5290772 144332 pts/1  Sl+  12:29   0:05              \_ java -jar lightning-talk-demo.jar 5 5000000 100
+[centos@hlohse-hivemq1 ~]$ sudo perf stat -e L1-dcache-loads,L1-dcache-load-misses,cache-references,cache-misses,branches,branch-misses -p 27179
+
+ Performance counter stats for process id '27179':
+
+       10152127823      L1-dcache-loads                                               (56.97%)
+        1294949626      L1-dcache-load-misses     #   12.76% of all L1-dcache hits    (51.54%)
+        1149289359      cache-references                                              (33.90%)
+         757027996      cache-misses              #   65.869 % of all cache refs      (50.00%)
+        5397771123      branches                                                      (66.62%)
+         149004643      branch-misses             #    2.76% of all branches          (66.54%)
+
+      57.012798922 seconds time elapsed
