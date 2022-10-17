@@ -30,7 +30,7 @@ public class Main {
      * @param args dataStructure numValues numIterations
      *             dataStructure  int  Ordinal of the DataStructure enum to use.
      *             numValues      int  Number of Values to generate randomly and sum up.
-     *             numIterations  int  Number of benchmark iterations to run and calculate the mean runtime of.
+     *             numIterations  int  Number of benchmark warmups & iterations to run and calculate the mean runtime of.
      */
     public static void main(final String @NotNull [] args) throws IOException {
         //System.out.println(ClassLayout.parseClass(Long.class).toPrintable());
@@ -143,21 +143,25 @@ public class Main {
     }
 
     private static void runBenchmark(final @NotNull Supplier<Long> sumSupplier, final int numIterations) throws IOException {
-        System.out.println("Press enter to start.");
+        System.out.println("Warming up...");
+        final long warmupSum = calculateSum(sumSupplier, numIterations);
+        System.out.println("Sum " + warmupSum);
+        System.out.println("Press enter to start benchmark.");
         @SuppressWarnings("unused")
         final int readReturnCode = System.in.read();
         final long startMs = System.currentTimeMillis();
-        long totalSum = 0;
-        for (int i = 0; i < numIterations; i++) {
-            totalSum += sumSupplier.get();
-        }
+        final long benchmarkSum = calculateSum(sumSupplier, numIterations);
         final long stopMs = System.currentTimeMillis();
         final long totalRuntimeMs = stopMs - startMs;
         final long averageRuntimeMs = totalRuntimeMs / numIterations;
-        System.out.println("Sum " + totalSum + " @ " + averageRuntimeMs + " ms mean runtime per iteration.");
+        System.out.println("Sum " + benchmarkSum + " @ " + averageRuntimeMs + " ms mean runtime per iteration.");
     }
 
-    private static void printMemoryLayout(final @NotNull Class<?> clazz) {
-        System.out.println(ClassLayout.parseClass(clazz).toPrintable());
+    private static long calculateSum(final @NotNull Supplier<Long> sumSupplier, final int numIterations) {
+        long sum = 0;
+        for (int i = 0; i < numIterations; i++) {
+            sum += sumSupplier.get();
+        }
+        return sum;
     }
 }
