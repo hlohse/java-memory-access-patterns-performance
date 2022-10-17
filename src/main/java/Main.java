@@ -1,3 +1,4 @@
+import it.unimi.dsi.fastutil.longs.LongAVLTreeSet;
 import org.jetbrains.annotations.NotNull;
 import org.openjdk.jol.info.ClassLayout;
 
@@ -18,7 +19,8 @@ public class Main {
         ARRAY_LIST,
         LINKED_LIST_CREATION_ORDER,
         LINKED_LIST_RANDOM_ORDER,
-        TREE_SET;
+        TREE_SET,
+        FASTUTIL_AVL_TREE_SET;
 
         private static @NotNull DataStructure of(final int ordinal) {
             Objects.checkIndex(ordinal, DataStructure.values().length);
@@ -115,6 +117,12 @@ public class Main {
 
             case TREE_SET: {
                 final Collection<Long> values = new TreeSet<>();
+                fillWithRandomValues(values, numValues);
+                runBenchmark(newSumSupplierFor(values), numIterations);
+            } break;
+
+            case FASTUTIL_AVL_TREE_SET: {
+                final LongAVLTreeSet values = new LongAVLTreeSet();
                 fillWithRandomValues(values, numValues);
                 runBenchmark(newSumSupplierFor(values), numIterations);
             } break;
