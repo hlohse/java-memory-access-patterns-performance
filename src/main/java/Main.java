@@ -33,7 +33,22 @@ public class Main {
      *             numIterations  int  Number of benchmark iterations to run and calculate the mean runtime of.
      */
     public static void main(final String @NotNull [] args) throws IOException {
-        // printMemoryLayout(Long.class);
+        //System.out.println(ClassLayout.parseClass(Long.class).toPrintable());
+        //final Integer[] boxedIntegerArray = new Integer[10];
+        //System.out.println(ClassLayout.parseInstance(boxedIntegerArray).toPrintable());
+        /*
+        final ArrayList<Long> arrayList = new ArrayList<>(2);
+        arrayList.add(3234523523L);
+        arrayList.add(5647676557L);
+        System.out.println(ClassLayout.parseInstance(arrayList).toPrintable());
+         */
+        /*
+        final LinkedList<Object> linkedList = new LinkedList<>();
+        linkedList.add(3234523523L);
+        linkedList.add(5647676557L);
+        System.out.println(ClassLayout.parseInstance(linkedList).toPrintable());
+         */
+
         if (args.length != 3) {
             throw new IllegalArgumentException("Expected 3 arguments but got: " + args.length);
         }
